@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+  	<meta charset="UTF-8">
+ 	<title>Budget Tracker</title>
+	<!-- bower:css -->
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+	<link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+	<!-- endbower -->
+	<!-- inject:css -->
+	<link rel="stylesheet" href="/app/styles/styles.css">
+	<!-- endinject -->
+</head>
+
+<body>
+<div class="container" ng-controller="MainController as vm">
+	<div class="text-center">
+		<h1 class="display-1">Budget Tracker</h1>
+	</div>
+	<legend></legend>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="panel panel-success">
+				<!-- The income panel is here -->
+				<div class="panel-heading">Income Entries</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="incomeText">Description</label>
+						<input type="text" class="form-control" id="incomeText" ng-model="vm.descriptionInc">
+					</div>
+					<div class="form-group">
+						<label for="incomeAmount">Amount</label>
+						<input type="number" class="form-control" id="incomeAmount" ng-model="vm.amountInc">
+					</div>
+					<button type="button" class="btn btn-success btn-lg btn-block" ng-click="vm.addItemInc()"> + Add Income </button>
+					<table class="table table-hover">
+						<tr>
+							<th>Description</th>
+							<th class="text-right">Amount</th>
+						</tr>
+						<!-- Will repeat the values in vm.income -->
+						<tr ng-repeat="earned in vm.income">
+							<td ng-show="!$first">{{earned.description}}</td>
+							<td class="text-right" ng-show="!$first">$ {{earned.amount}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="panel panel-danger">
+				<!-- The expense panel is here -->
+				<div class="panel-heading">Expense Entries</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="expenseText">Description</label>
+						<input type="text" class="form-control" id="expenseText" ng-model="vm.descriptionExp">
+					</div>
+					<div class="form-group">
+						<label for="expenseAmount">Amount</label>
+						<input type="number" class="form-control" id="expenseAmount" ng-model="vm.amountExp">
+					</div>
+					<button type="button" class="btn btn-danger btn-lg btn-block" ng-click="vm.addItemExp()"> + Add Expense </button>
+					<table class="table table-hover">
+						<tr>
+							<th>Description</th>
+							<th class="text-right">Amount</th>
+						</tr>
+						<!-- Will show all the values in vm.expenses -->
+						<tr ng-repeat="spent in vm.expenses">
+							<td ng-show="!$first">{{spent.description}}</td>
+							<td class="text-right" ng-show="!$first">$ {{spent.amount}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-offset-3 col-sm-6">
+			<!-- The summary panel will turn red when the left over amount is negative -->
+			<div ng-class="(vm.leftOvers >= 0) ? 'panel panel-info' : 'panel panel-danger'">
+				<div class="panel-heading">Summary</div>
+				<div class="panel-body">
+					<div class="row">
+						<table class="table">
+							<tr>
+								<th>Total Income</th>
+								<th class="text-right">Total Expense</th>
+							</tr>
+							<tr>
+								<td>$ {{vm.totalIncome}}</td>
+								<td class="text-right">$ {{vm.totalExpense}}</td>
+							</tr>
+						</table>
+					</div>
+					<div class="row">
+						<div class="text-center">
+							<label for="spent">Left after spending</label>
+							<p id="spent">$ {{vm.leftOvers}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<!-- endbower -->
+<!-- inject:js -->
+<script src="/app/app.js"></script>
+<script src="/app/controller.js"></script>
+<script src="/app/factory.js"></script>
+<!-- endinject -->
+</body>
+</html>
